@@ -14,23 +14,66 @@ const mockUpStrand = () => {
 };
 
 //creating factory to easily create multiple strings
-const pAequorFactory = (num, arr) => {
+const pAequorFactory = (num) => {
   let specimenNum = num;
-  let DNA = arr;
-  //console.log(DNA)
-  const mutate = () => { //create muation methode
-    let i = Math.floor(Math.random() * 15); //create an index number by selecting a random number between 0 and 15
-    let newBase = returnRandBase(); // create a new base to store the valuse of the new DNA 
-    while (newBase === DNA[i]) { // compare if DNA at the selected index (i) equals the new base, if so
-      newBase = returnRandBase(); // try again
+  let DNA = [];
+  for (let i = 0; i < 15; i++) {
+    DNA.push(returnRandBase());
+  }
+  const mutate = () => {
+    let i = Math.floor(Math.random() * DNA.length);
+    let newBase = returnRandBase();
+    while (newBase === DNA[i]) {
+      newBase = returnRandBase();
     }
-    DNA[i] = newBase; // if not replace DNA[i] with the new value 
+    DNA[i] = newBase;
   };
-
-  return { // return the values 
+  const compareDNA = pAequor => {
+    let count = 0;
+    for (let i = 0; i < 15; i++) {
+      if (DNA[i] === pAequor.DNA[i]) {
+        count++;
+      } else {
+        continue;
+      }
+    }
+    console.log(`specimen #1 and specimen #2 have ${count/15*100}% DNA in common`);
+  };
+  const willLikelySurvive = () => {
+    let count = 0;
+    for (let i = 0; i < 15; i++) {
+      if (DNA[i] === 'C' || DNA[i] === 'G') {
+        count++;
+      } else {
+        continue;
+      }
+    }
+    if (count / 15 >= 0.6) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return {
     specimenNum,
     DNA,
-    mutate
+    mutate,
+    compareDNA,
+    willLikelySurvive
   };
 };
+
+//creating 30 instances of pAequor that can survive
+let survivingInstances = [];
+let i = 0;
+while (survivingInstances.length < 30) {
+  let instance = pAequorFactory(i);
+  if (instance.willLikelySurvive()) {
+    survivingInstances.push(instance);
+  }
+  i++;
+};
+
+console.log(survivingInstances);
+
 
