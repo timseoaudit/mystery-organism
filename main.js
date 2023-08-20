@@ -8,7 +8,7 @@ const returnRandBase = () => {
 const mockUpStrand = () => {
   const newStrand = [];
   for (let i = 0; i < 15; i++) {
-    newStrand.push(returnRandBase());
+    newStrand.push(returnRandBase()); // use returnRandBase to generate array of 15 bases 
   }
   return newStrand;
 };
