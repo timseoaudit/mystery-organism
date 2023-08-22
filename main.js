@@ -75,5 +75,5 @@ while (survivingInstances.length < 30) { // create a while loop that creates ins
 };
 
 console.log(survivingInstances);
-
+// upload to GitHub 
 
